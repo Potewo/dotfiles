@@ -11,9 +11,8 @@ echo "2"
 # set -ue <-> command exist check
 install_starship() {
   echo "a"
-  type starship > /dev/null 2>&1
   echo "b"
-  if [ $? -eq 0 ] ; then # コマンドが存在すれば
+  if type starship > /dev/null 2>&1; then # コマンドが存在すれば
     echo "c"
     command echo "starship is already exist. skipped installing."
     echo "d"
