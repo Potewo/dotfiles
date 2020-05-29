@@ -7,11 +7,34 @@ helpmsg() {
   command echo ""
 }
 
+install_starship() {
+  type starship > /dev/null 2>&1
+  if [ $? -eq 0 ] ; then # コマンドが存在すれば
+    command echo "starship is already exist. skipped installing."
+  else
+    command echo "starship is not found. start installing."
+    curl -fsSL https://starship.rs/install.sh | bash
+  fi
+}
+
+install_zinit() {
+  type starship > /dev/null 2>&1
+  if [ $? -eq 0 ] ; then # コマンドが存在すれば
+    command echo "zinit is already exist. skipped installing."
+  else
+    command echo "zinit is not found. start installing."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+  fi
+}
+
 link_to_homedir() {
 
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
   local dotdir=$(dirname ${script_dir})
-  local backupdir="$HOME/$dotdir/dotbackup"
+  local backupdir="$HOME/dotbackup"
+  command echo "dotdir = " $dotdir
+  command echo "script_dir = " $script_dir
+  command echo "local_dir = " $backupdir
   command echo "backup old dotfiles..."
   if [ ! -d $backupdir ];then
     command echo "$backupdir not found. Auto Make it"
@@ -50,6 +73,8 @@ while [ $# -gt 0 ];do
   shift
 done
 
+install_starship
+install_zinit
 link_to_homedir
 command echo -e "\e[1;36m Install completed!!!! \e[m"
 
