@@ -32,6 +32,9 @@ link_to_homedir() {
   command echo "script_dir = " $script_dir
   command echo "backup_dir = " $backupdir
   command echo "backup old dotfiles..."
+  if [ ! -e "$HOME/.config/nvim" ];then
+    mkdir -p $HOME/.config/nvim
+  fi
   if [ ! -d $backupdir ];then
     command echo "$backupdir not found. Auto Make it"
     command mkdir $backupdir
