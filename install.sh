@@ -6,7 +6,6 @@ helpmsg() {
   command echo "Usage: $0 [--help | -h]" 0>&2
   command echo ""
 }
-# set -ue <-> command exist check
 install_starship() {
   if type starship > /dev/null 2>&1; then # コマンドが存在すれば
     command echo "starship is already exist. skipped installing."
@@ -23,7 +22,6 @@ install_zinit() {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
   fi
 }
-echo "4"
 link_to_homedir() {
 
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -31,15 +29,15 @@ link_to_homedir() {
   local backupdir="$HOME/dotbackup"
   command echo "dotdir = " $dotdir
   command echo "script_dir = " $script_dir
-  command echo "local_dir = " $backupdir
+  command echo "backup_dir = " $backupdir
   command echo "backup old dotfiles..."
   if [ ! -d $backupdir ];then
     command echo "$backupdir not found. Auto Make it"
     command mkdir $backupdir
   fi
 
-  if [[ "$HOME" != "$dotdir" ]];then
-    for f in $dotdir/.??*; do
+  if [[ "$HOME" != "$script_dir" ]];then
+    for f in $script_dir/.??*; do
       [[ `basename $f` == ".git" ]] && continue
       [[ `basename $f` == ".zshrc" ]] && continue
       if [[ -L "$HOME/`basename $f`" ]];then
