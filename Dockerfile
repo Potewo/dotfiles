@@ -7,8 +7,8 @@ ENV SHELL /bin/bash
 
 RUN apt update
 RUN apt -y upgrade
-RUN apt -y install git vim sudo zsh neovim python-neovim python3-neovim
-RUN useradd -m docker -s /bin/bash && echo "${USER}:${USER}" | chpasswd && adduser docker sudo
+RUN apt -y install git vim sudo zsh neovim curl
+RUN useradd -m docker -s ${SHELL} && echo "${USER}:${USER}" | chpasswd && adduser docker sudo
 
 
 USER ${USER}
