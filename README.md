@@ -1,3 +1,3 @@
 # dotfiles
-## Todo
-- init.shの作成
+## usage
+`bash -c "$(curl -fsSL https://raw.githubusercontent.com/Potewo/dotfiles/master/init.sh)"`
