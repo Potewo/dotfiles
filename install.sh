@@ -22,6 +22,7 @@ install_zinit() {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
   fi
 }
+
 link_to_homedir() {
 
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -39,12 +40,19 @@ link_to_homedir() {
     touch $HOME/myenv.zsh
     chmod a+rx $HOME/myenv.zsh
   fi
-
-
   if [[ "$HOME" != "$script_dir" ]];then
+    if [[ -L "$HOME/.config/nvim/init.vim" ]];then
+      command rm -f "$HOME/.config/nvim/init.vim"
+    fi
+    if [[ -e "$HOME/init.vim" ]];then
+      command mv "$HOME/.config/nvim/init.vim" $backupdir
+    fi
+    command ln -snf $script_dir/init.vim $HOME/.config/nvim/init.vim
+
     for f in $script_dir/.??*; do
       [[ `basename $f` == ".git" ]] && continue
       [[ `basename $f` == ".zshrc" ]] && continue
+
       if [[ -L "$HOME/`basename $f`" ]];then
         command rm -f "$HOME/`basename $f`"
       fi
