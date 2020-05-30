@@ -35,6 +35,11 @@ link_to_homedir() {
     command echo "$backupdir not found. Auto Make it"
     command mkdir $backupdir
   fi
+  if [[ ! -e "$HOME/myenv.zsh" ]]; then
+    touch $HOME/myenv.zsh
+    chmod a+rx $HOME/myenv.zsh
+  fi
+
 
   if [[ "$HOME" != "$script_dir" ]];then
     for f in $script_dir/.??*; do
