@@ -39,7 +39,7 @@ link_to_homedir() {
   # example: dot_dir = /home/user
   local dotdir=$(dirname ${script_dir})
   local backupdir="$HOME/dotbackup"
-  local targets=`find $HOME/dotfiles/files/[!..]* -type f`
+  local targets=`find $HOME/dotfiles/files -name '*' -type f`
   command echo "dotdir = " $dotdir
   command echo "script_dir = " $script_dir
   command echo "backup_dir = " $backupdir
