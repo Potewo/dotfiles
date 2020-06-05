@@ -38,41 +38,49 @@ link_to_homedir() {
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
   local dotdir=$(dirname ${script_dir})
   local backupdir="$HOME/dotbackup"
+  local targets=`find $HOME/dotfiles/files/.[!.]* -type f`
   command echo "dotdir = " $dotdir
   command echo "script_dir = " $script_dir
   command echo "backup_dir = " $backupdir
   command echo "backup old dotfiles..."
+
   if [ ! -e "$HOME/.config/nvim" ];then
     mkdir -p $HOME/.config/nvim
   fi
+  # backup
   if [ ! -d $backupdir ];then
     command echo "$backupdir not found. Auto Make it"
     command mkdir $backupdir
   fi
+  # create myenv
   if [[ ! -e "$HOME/myenv.zsh" ]]; then
     touch $HOME/myenv.zsh
     chmod a+rx $HOME/myenv.zsh
   fi
   if [[ "$HOME" != "$script_dir" ]];then
-    if [[ -L "$HOME/.config/nvim/init.vim" ]];then
-      command rm -f "$HOME/.config/nvim/init.vim"
-    fi
-    if [[ -e "$HOME/init.vim" ]];then
-      command mv "$HOME/.config/nvim/init.vim" $backupdir
-    fi
-    command ln -snf $script_dir/init.vim $HOME/.config/nvim/init.vim
+    # if [[ -L "$HOME/.config/nvim/init.vim" ]];then
+    #   command rm -f "$HOME/.config/nvim/init.vim"
+    # fi
+    # if [[ -e "$HOME/init.vim" ]];then
+    #   command mv "$HOME/.config/nvim/init.vim" $backupdir
+    # fi
+    # command ln -snf $script_dir/init.vim $HOME/.config/nvim/init.vim
 
-    for f in $script_dir/.??*; do
-      [[ `basename $f` == ".git" ]] && continue
+    for file in targets; do
+      local f=${file#*dotfiles/files/}
       [[ `basename $f` == ".zshrc" ]] && continue
+      if [ ! -e $(dirname $f) ];then
+        mkdir -p $(dirname $f)
+      fi
 
-      if [[ -L "$HOME/`basename $f`" ]];then
-        command rm -f "$HOME/`basename $f`"
+      if [[ -L "$HOME/`$f`" ]];then
+        command rm -f "$HOME/`$f`"
       fi
-      if [[ -e "$HOME/`basename $f`" ]];then
-        command mv "$HOME/`basename $f`" $backupdir
+
+      if [[ -e "$HOME/`$f`" ]];then
+        command mv "$HOME/`$f`" "$backupdir/`$f`"
       fi
-      command ln -snf $f $HOME
+      command ln -snf $HOME/dotfiles/files/$f $HOME/$f
     done
   else
     command echo "same install src dest"
