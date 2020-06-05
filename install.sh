@@ -34,20 +34,18 @@ install_dein() {
 
 
 link_to_homedir() {
-
+  # example: script_dir = /home/user/dotfiles
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+  # example: dot_dir = /home/user
   local dotdir=$(dirname ${script_dir})
   local backupdir="$HOME/dotbackup"
   local targets=`find $HOME/dotfiles/files/.[!.]* -type f`
   command echo "dotdir = " $dotdir
   command echo "script_dir = " $script_dir
   command echo "backup_dir = " $backupdir
+  command echo "targets = " $targets
   command echo "backup old dotfiles..."
 
-  if [ ! -e "$HOME/.config/nvim" ];then
-    mkdir -p $HOME/.config/nvim
-  fi
-  # backup
   if [ ! -d $backupdir ];then
     command echo "$backupdir not found. Auto Make it"
     command mkdir $backupdir
@@ -58,27 +56,19 @@ link_to_homedir() {
     chmod a+rx $HOME/myenv.zsh
   fi
   if [[ "$HOME" != "$script_dir" ]];then
-    # if [[ -L "$HOME/.config/nvim/init.vim" ]];then
-    #   command rm -f "$HOME/.config/nvim/init.vim"
-    # fi
-    # if [[ -e "$HOME/init.vim" ]];then
-    #   command mv "$HOME/.config/nvim/init.vim" $backupdir
-    # fi
-    # command ln -snf $script_dir/init.vim $HOME/.config/nvim/init.vim
-
-    for file in targets; do
+    for file in $targets; do
       local f=${file#*dotfiles/files/}
-      [[ `basename $f` == ".zshrc" ]] && continue
-      if [ ! -e $(dirname $f) ];then
+      # [[ `basename $f` == ".zshrc" ]] && continue
+      if [[ ! -e $(dirname $f) ]];then
         mkdir -p $(dirname $f)
       fi
 
-      if [[ -L "$HOME/`$f`" ]];then
-        command rm -f "$HOME/`$f`"
+      if [[ -L "$HOME/$f" ]];then
+        command rm -f "$HOME/$f"
       fi
 
-      if [[ -e "$HOME/`$f`" ]];then
-        command mv "$HOME/`$f`" "$backupdir/`$f`"
+      if [[ -e "$HOME/$f" ]];then
+        command mv "$HOME/$f" "$backupdir/$f"
       fi
       command ln -snf $HOME/dotfiles/files/$f $HOME/$f
     done
