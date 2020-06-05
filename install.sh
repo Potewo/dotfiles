@@ -39,7 +39,7 @@ link_to_homedir() {
   # example: dot_dir = /home/user
   local dotdir=$(dirname ${script_dir})
   local backupdir="$HOME/dotbackup"
-  local targets=`find $HOME/dotfiles/files -name '*' -type f`
+  local targets=`find ${script_dir}/files -name '*' -type f`
   command echo "dotdir = " $dotdir
   command echo "script_dir = " $script_dir
   command echo "backup_dir = " $backupdir
@@ -70,7 +70,7 @@ link_to_homedir() {
       if [[ -e "$HOME/$f" ]];then
         command mv "$HOME/$f" "$backupdir/$f"
       fi
-      command ln -snf $HOME/dotfiles/files/$f $HOME/$f
+      command ln -snf ${script_dir}/files/$f $HOME/$f
     done
   else
     command echo "same install src dest"
