@@ -68,6 +68,9 @@ link_to_homedir() {
       fi
 
       if [[ -e "$HOME/$f" ]];then
+        if [[ ! -e $(dirname ${backupdir}/${f}) ]]; then
+          mkdir -p $(dirname ${backupdir}/${f})
+        fi
         command mv "$HOME/$f" "$backupdir/$f"
       fi
       command ln -snf ${script_dir}/files/$f $HOME/$f
