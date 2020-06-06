@@ -36,4 +36,19 @@ zinit light-mode for \
 eval "$(starship init zsh)"
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
+
+
+alias tmuxs="tmux -2 attach || tmux -2 new-session \; source-file ~/.tmux/new-session"
+
+function tmuxcd {
+  cd $1
+  tmux
+}
+
+function tmuxscd {
+  cd $1
+  tmuxs
+}
+
+
 source ~/myenv.zsh
