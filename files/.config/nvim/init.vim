@@ -81,7 +81,7 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('tpope/vim-commentary')
   call dein#add('mattn/emmet-vim')
   call dein#add('airblade/vim-gitgutter')
-  call dein#add('jelera/vim-javascript-syntax');
+  call dein#add('jelera/vim-javascript-syntax')
   " Required:
   call dein#end()
   call dein#save_state()
