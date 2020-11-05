@@ -37,3 +37,4 @@ eval "$(starship init zsh)"
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
 source ~/myenv.zsh
+
