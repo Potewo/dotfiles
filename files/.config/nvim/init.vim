@@ -6,7 +6,6 @@ function! ZenkakuSpace()
     highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
 endfunction
 set autoindent
-set tabstop=4
 set shiftwidth=2
 set expandtab
 set clipboard=unnamed
@@ -32,7 +31,7 @@ set showmatch
 " 括弧入力時の対応する括弧を表示
 set laststatus=2
 " ステータスラインを常に表示
-set tabstop=4
+set tabstop=2
 " 行頭以外のTab文字の表示幅
 set ignorecase
 " 検索文字の大文字小文字を区別しない
@@ -82,6 +81,7 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('tpope/vim-commentary')
   call dein#add('mattn/emmet-vim')
   call dein#add('airblade/vim-gitgutter')
+  call dein#add('jelera/vim-javascript-syntax')
   " Required:
   call dein#end()
   call dein#save_state()
