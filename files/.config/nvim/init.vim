@@ -82,7 +82,6 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('mattn/emmet-vim')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('jelera/vim-javascript-syntax')
-  call dein#add('neoclide/coc.nvim', { 'merged': 0 })
   " Required:
   call dein#end()
   call dein#save_state()
