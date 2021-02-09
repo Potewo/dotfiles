@@ -67,7 +67,10 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('davidhalter/jedi')
   call dein#add('vim-airline/vim-airline')
   call dein#add('scrooloose/nerdtree')
+
+  "Gitの操作
   call dein#add('tpope/vim-fugitive')
+
   call dein#add('thinca/vim-quickrun')
   call dein#add('hhatto/autopep8')
   call dein#add('Shougo/denite.nvim')
@@ -76,11 +79,20 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('vim/killersheep')
   call dein#add('dense-analysis/ale')
   call dein#add('alvan/vim-closetag')
+
+  " ヤンクした中身を置き換えるオペレータ
   call dein#add('kana/vim-operator-user')
   call dein#add('kana/vim-operator-replace')
+
+  " gcc/gcでコメントアウト
   call dein#add('tpope/vim-commentary')
+
+  " HTML/CSSのスニペットの展開
   call dein#add('mattn/emmet-vim')
+
+  " Gitの差分表示
   call dein#add('airblade/vim-gitgutter')
+
   call dein#add('jelera/vim-javascript-syntax')
   " Required:
   call dein#end()
@@ -114,4 +126,6 @@ let g:airline#extensions#ale#close_lnum_symbol = ')'
 let g:ale_echo_msg_format = '[%linter%]%code: %%s'
 highlight link ALEErrorSign Tag
 highlight link ALEWarningSign StorageClass
+" Rをオペレータにしてヤンクした中身で置き換える
 map R <Plug>(operator-replace)
+
