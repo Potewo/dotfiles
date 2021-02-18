@@ -9,16 +9,17 @@ set autoindent
 set shiftwidth=2
 set expandtab
 set clipboard=unnamed
-autocmd FileType python setlocal omnifunc=jedi#completions
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:deoplete#enable_at_startup = 1
-let g:ale_fix_on_save = 1
 
 set nobackup
 " バックアップファイルを作らない
-set noswapfile
+set nowritebackup
+" ファイル上書き時にバックアップを作らない
+
+" set noswapfile
 " スワップファイルを作らない
+set updatetime=300
+
+
 set autoread
 " 編集中のファイルが変更されたら自動で読み直す
 set hidden
@@ -41,6 +42,13 @@ set guioptions+=a
 " ヤンクでクリップボードにコピー
 set hlsearch
 " 検索結果をハイライト
+set shortmess+=c
+" Don't pass messages to |ins-completion-menu|.(coc.nvim)
+
+set mouse=a
+" マウスの有効化
+
+let mapleader = "\<Space>"
 
 "dein Scripts-----------------------------
 if &compatible
@@ -60,11 +68,6 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('$HOME/.cache/dein/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here like this:
-  "call dein#add('Shougo/neosnippet.vim')
-  "call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('zchee/deoplete-jedi')
-  call dein#add('davidhalter/jedi')
   call dein#add('vim-airline/vim-airline')
   call dein#add('scrooloose/nerdtree')
 
@@ -74,10 +77,7 @@ if dein#load_state('$HOME/.cache/dein')
   call dein#add('thinca/vim-quickrun')
   call dein#add('hhatto/autopep8')
   call dein#add('Shougo/denite.nvim')
-  call dein#add('kballard/vim-swift')
-  call dein#add('keith/swift.vim')
   call dein#add('vim/killersheep')
-  call dein#add('dense-analysis/ale')
   call dein#add('alvan/vim-closetag')
 
   " ヤンクした中身を置き換えるオペレータ
@@ -93,7 +93,10 @@ if dein#load_state('$HOME/.cache/dein')
   " Gitの差分表示
   call dein#add('airblade/vim-gitgutter')
 
-  call dein#add('jelera/vim-javascript-syntax')
+
+  " coc.nvim language server protocol
+  call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+
   " Required:
   call dein#end()
   call dein#save_state()
@@ -129,3 +132,36 @@ highlight link ALEWarningSign StorageClass
 " Rをオペレータにしてヤンクした中身で置き換える
 map R <Plug>(operator-replace)
 
+
+
+"coc.nvim
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
