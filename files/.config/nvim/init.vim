@@ -48,6 +48,14 @@ set shortmess+=c
 set mouse=a
 " マウスの有効化
 
+" 検索後、カーソルを中央に持ってくる
+nmap n nzz
+nmap N Nzz
+nmap * *zz
+nmap # #zz
+nmap g* g*zz
+nmap g# g#zz
+
 let mapleader = "\<Space>"
 
 "dein Scripts-----------------------------
@@ -69,15 +77,10 @@ if dein#load_state('$HOME/.cache/dein')
 
   " Add or remove your plugins here like this:
   call dein#add('vim-airline/vim-airline')
-  call dein#add('scrooloose/nerdtree')
 
   "Gitの操作
   call dein#add('tpope/vim-fugitive')
 
-  call dein#add('thinca/vim-quickrun')
-  call dein#add('hhatto/autopep8')
-  call dein#add('Shougo/denite.nvim')
-  call dein#add('vim/killersheep')
   call dein#add('alvan/vim-closetag')
 
   " ヤンクした中身を置き換えるオペレータ
@@ -96,6 +99,12 @@ if dein#load_state('$HOME/.cache/dein')
 
   " coc.nvim language server protocol
   call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+
+  " advanced syntax highlight
+  call dein#add('sheerun/vim-polyglot')
+
+  " snipet
+  call dein#add('SirVer/ultisnips')
 
   " Required:
   call dein#end()
@@ -118,17 +127,6 @@ set sh=zsh
 
 "キーマッピング
 inoremap <C-t> terminal
-" 保存時のみ実行する
-let g:ale_lint_on_text_changed = 0
-" 表示に関する設定
-let g:airline#extensions#ale#enabled = 1
-let g:ale_sign_error = '⛔'
-let g:ale_sign_warning = '⚠'
-let g:airline#extensions#ale#open_lnum_symbol = '('
-let g:airline#extensions#ale#close_lnum_symbol = ')'
-let g:ale_echo_msg_format = '[%linter%]%code: %%s'
-highlight link ALEErrorSign Tag
-highlight link ALEWarningSign StorageClass
 " Rをオペレータにしてヤンクした中身で置き換える
 map R <Plug>(operator-replace)
 
@@ -139,6 +137,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>qf <Plug>(coc-fix-current)
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -156,6 +155,7 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>fmt <Plug>(coc-format)
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -165,3 +165,17 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" uninstall dein plugins
+call map(dein#check_clean(), "delete(v:val, 'rf')")
+"
+" then `:call dein#recache_runtimepath()
+
+" Ultisnips settings
+let g:UltiSnipsExpandTrigger="<Down>"
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" CocList settings
+nnoremap <silent><nowait> <leader>lf :<C-u>CocList files<cr>
+nnoremap <silent><nowait> <leader>ld :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>lo :<C-u>CocList outline<cr>
