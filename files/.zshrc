@@ -33,10 +33,10 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
-eval "$(starship init zsh)"
-zinit light zsh-users/zsh-autosuggestions
-zinit light zdharma/fast-syntax-highlighting
 
 alias tmuxs='tmux new-session \; source-file ~/.tmux.auto-split.conf'
 source ~/myenv.zsh
 
+eval "$(starship init zsh)"
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma/fast-syntax-highlighting
