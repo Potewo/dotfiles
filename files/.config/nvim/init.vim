@@ -179,3 +179,38 @@ imap <C-l> <Plug>(coc-snippets-expand)
 nnoremap <silent><nowait> <leader>lf :<C-u>CocList files<cr>
 nnoremap <silent><nowait> <leader>ld :<C-u>CocList diagnostics<cr>
 nnoremap <silent><nowait> <leader>lo :<C-u>CocList outline<cr>
+
+let g:coc_global_extensions = [
+      \'coc-tsserver',
+      \'coc-rls',
+      \'coc-json',
+      \'coc-go',
+      \'coc-clangd',
+      \'coc-snippets',
+      \'coc-lists',
+      \'coc-discord-rpc',
+      \'coc-yaml',
+      \'coc-vetur',
+      \'coc-stylelint',
+      \'coc-sourcekit',
+      \'coc-pyright',
+      \'coc-go',
+      \'coc-css',
+      \'coc-cmake',
+      \]
+" Typescript
+" Rust
+" json
+" Go
+" Clang C++
+" Ultisnips
+" buffer,files,filetypes etc.
+" Discord (Now Playing)
+" yaml
+" vue
+" css lint
+" Swift
+" Python
+" Go
+" CSS
+" CMake
