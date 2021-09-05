@@ -3,5 +3,4 @@ ssh_only = false
 
 [memory_usage]
 disabled = false
-show_percentage = true
 
