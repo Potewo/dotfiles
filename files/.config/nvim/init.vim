@@ -15,7 +15,7 @@ set nobackup
 set nowritebackup
 " ファイル上書き時にバックアップを作らない
 
-" set noswapfile
+set noswapfile
 " スワップファイルを作らない
 set updatetime=300
 
@@ -30,6 +30,8 @@ set number
 " 行番号を表示
 set showmatch
 " 括弧入力時の対応する括弧を表示
+set matchtime=1
+" 対応したカッコの待ち時間を0.5から0.1に変更
 set laststatus=2
 " ステータスラインを常に表示
 set tabstop=2
@@ -58,6 +60,15 @@ nmap g# g#zz
 
 let mapleader = "\<Space>"
 
+" 106
+
+nnoremap + <C-a>
+" インクリメント
+nnoremap - <C-x>
+" デクリメント
+nnoremap Y y$
+" 末尾までヤンク
+
 "dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -81,7 +92,7 @@ if dein#load_state('$HOME/.cache/dein')
   "Gitの操作
   call dein#add('tpope/vim-fugitive')
 
-  call dein#add('alvan/vim-closetag')
+  " call dein#add('alvan/vim-closetag')
 
   " ヤンクした中身を置き換えるオペレータ
   call dein#add('kana/vim-operator-user')
@@ -100,11 +111,22 @@ if dein#load_state('$HOME/.cache/dein')
   " coc.nvim language server protocol
   call dein#add('neoclide/coc.nvim', { 'merged': 0 })
 
-  " advanced syntax highlight
-  call dein#add('sheerun/vim-polyglot')
+  " " advanced syntax highlight
+  " call dein#add('sheerun/vim-polyglot')
+  " syntax highlight
+  call dein#add('neoclide/coc-highlight')
 
   " snipet
   call dein#add('SirVer/ultisnips')
+
+  " syntax highlight for react
+  call dein#add('pangloss/vim-javascript')
+
+  " svelte highlighting
+  call dein#add('evanleck/vim-svelte')
+
+  " rust
+  call dein#add('rust-lang/rust.vim')
 
   " Required:
   call dein#end()
@@ -166,6 +188,11 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 " uninstall dein plugins
 call map(dein#check_clean(), "delete(v:val, 'rf')")
 "
@@ -182,13 +209,12 @@ nnoremap <silent><nowait> <leader>lo :<C-u>CocList outline<cr>
 
 let g:coc_global_extensions = [
       \'coc-tsserver',
-      \'coc-rls',
+      \'coc-rust-analyzer',
       \'coc-json',
       \'coc-go',
       \'coc-clangd',
       \'coc-snippets',
       \'coc-lists',
-      \'coc-discord-rpc',
       \'coc-yaml',
       \'coc-vetur',
       \'coc-stylelint',
@@ -214,3 +240,7 @@ let g:coc_global_extensions = [
 " Go
 " CSS
 " CMake
+
+inoremap <C-j> <Esc>
+vnoremap <C-j> <Esc>
+nnoremap <C-j><C-j> :<C-u>nohlsearch<CR><Esc>
