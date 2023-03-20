@@ -35,6 +35,12 @@ zinit light-mode for \
 
 
 alias tmuxs='tmux new-session \; source-file ~/.tmux.auto-split.conf'
+
+if [ -d "$HOME/.bookmarks" ]; then
+    export CDPATH=".:$HOME/.bookmarks:/"
+    alias goto="cd -P"
+fi
+
 source ~/myenv.zsh
 
 eval "$(starship init zsh)"
