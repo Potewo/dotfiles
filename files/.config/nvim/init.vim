@@ -69,80 +69,102 @@ nnoremap - <C-x>
 nnoremap Y y$
 " 末尾までヤンク
 
+"install dein-----------------------------
+let $CACHE = expand('~/.cache')
+if !isdirectory($CACHE)
+  call mkdir($CACHE, 'p')
+endif
+if &runtimepath !~# '/dein.vim'
+  let s:dein_dir = fnamemodify('dein.vim', ':p')
+  if !isdirectory(s:dein_dir)
+    let s:dein_dir = $CACHE .. '/dein/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
+  endif
+  execute 'set runtimepath^=' .. substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
+endif
+"-----------------------------------------
+
 "dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
+" https://github.com/Shougo/dein.vim#basic-installation
+" Ward off unexpected things that your distro might have made, as
+" well as sanely reset options when re-sourcing .vimrc
+set nocompatible
+
+" Set dein base path (required)
+let s:dein_base = '~/.cache/dein/'
+
+" Set dein source path (required)
+let s:dein_src = '~/.cache/dein/repos/github.com/Shougo/dein.vim'
+
+" Set dein runtime path (required)
+execute 'set runtimepath+=' .. s:dein_src
+
+" Call dein initialization (required)
+call dein#begin(s:dein_base)
+
+call dein#add(s:dein_src)
+
+call dein#add('vim-airline/vim-airline')
+
+"Gitの操作
+call dein#add('tpope/vim-fugitive')
+
+" call dein#add('alvan/vim-closetag')
+
+" ヤンクした中身を置き換えるオペレータ
+call dein#add('kana/vim-operator-user')
+call dein#add('kana/vim-operator-replace')
+
+
+" HTML/CSSのスニペットの展開
+call dein#add('mattn/emmet-vim')
+
+" Gitの差分表示
+call dein#add('airblade/vim-gitgutter')
+
+
+" coc.nvim language server protocol
+call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+
+" " advanced syntax highlight
+" call dein#add('sheerun/vim-polyglot')
+" syntax highlight
+call dein#add('neoclide/coc-highlight')
+
+" snipet
+call dein#add('SirVer/ultisnips')
+
+" syntax highlight for react
+call dein#add('pangloss/vim-javascript')
+
+" svelte highlighting
+call dein#add('evanleck/vim-svelte')
+
+" rust
+call dein#add('rust-lang/rust.vim')
+
+
+" Finish dein initialization (required)
+call dein#end()
+
+" Attempt to determine the type of a file based on its name and possibly its
+" contents. Use this to allow intelligent auto-indenting for each filetype,
+" and for plugins that are filetype specific.
+filetype indent plugin on
+
+" Enable syntax highlighting
+if has('syntax')
+  syntax on
 endif
 
-" Required:
-" set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-
-" Required:
-if dein#load_state('$HOME/.cache/dein')
-  call dein#begin('$HOME/.cache/dein')
-
-  " Let dein manage dein
-  " Required:
-  call dein#add('$HOME/.cache/dein/repos/github.com/Shougo/dein.vim')
-
-  " Add or remove your plugins here like this:
-  call dein#add('vim-airline/vim-airline')
-
-  "Gitの操作
-  call dein#add('tpope/vim-fugitive')
-
-  " call dein#add('alvan/vim-closetag')
-
-  " ヤンクした中身を置き換えるオペレータ
-  call dein#add('kana/vim-operator-user')
-  call dein#add('kana/vim-operator-replace')
-
-  " gcc/gcでコメントアウト
-  call dein#add('tpope/vim-commentary')
-
-  " HTML/CSSのスニペットの展開
-  call dein#add('mattn/emmet-vim')
-
-  " Gitの差分表示
-  call dein#add('airblade/vim-gitgutter')
-
-
-  " coc.nvim language server protocol
-  call dein#add('neoclide/coc.nvim', { 'merged': 0 })
-
-  " " advanced syntax highlight
-  " call dein#add('sheerun/vim-polyglot')
-  " syntax highlight
-  call dein#add('neoclide/coc-highlight')
-
-  " snipet
-  call dein#add('SirVer/ultisnips')
-
-  " syntax highlight for react
-  call dein#add('pangloss/vim-javascript')
-
-  " svelte highlighting
-  call dein#add('evanleck/vim-svelte')
-
-  " rust
-  call dein#add('rust-lang/rust.vim')
-
-  " Required:
-  call dein#end()
-  call dein#save_state()
-endif
-
-" Required:
-filetype plugin indent on
-syntax enable
-
-" If you want to install not installed plugins on startup.
+" Uncomment if you want to install not-installed plugins on startup.
 "if dein#check_install()
-"  call dein#install()
+" call dein#install()
 "endif
-
-"End dein Scripts-------------------------
+"end of dein script -----------------------------------
 
 "シェルをzshにする
 set sh=zsh
