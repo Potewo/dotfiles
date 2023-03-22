@@ -23,16 +23,6 @@ install_zinit() {
   fi
 }
 
-install_dein() {
-  if [[ -e "$HOME/.cache/dein" ]];then
-    command echo "dein is already instaled"
-  else
-    curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > $HOME/installer.sh
-    sh ~/installer.sh ~/.cache/dein
-  fi
-}
-
-
 link_to_homedir() {
   # example: script_dir = /home/user/dotfiles
   local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
@@ -95,6 +85,5 @@ while [ $# -gt 0 ];do
 done
 install_starship
 install_zinit
-install_dein
 link_to_homedir
 command echo -e "\e[1;36m Install completed!!!! \e[m"
