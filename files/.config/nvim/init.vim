@@ -127,7 +127,7 @@ call dein#add('airblade/vim-gitgutter')
 
 
 " coc.nvim language server protocol
-call dein#add('neoclide/coc.nvim', { 'merged': 0 })
+call dein#add('neoclide/coc.nvim', { 'rev': 'release', 'merged': 0 })
 
 " " advanced syntax highlight
 " call dein#add('sheerun/vim-polyglot')
