@@ -146,6 +146,9 @@ call dein#add('evanleck/vim-svelte')
 " rust
 call dein#add('rust-lang/rust.vim')
 
+" comment out
+call dein#add('tpope/vim-commentary')
+
 
 " Finish dein initialization (required)
 call dein#end()
@@ -245,6 +248,7 @@ let g:coc_global_extensions = [
       \'coc-go',
       \'coc-css',
       \'coc-cmake',
+      \'coc-svelte',
       \]
 " Typescript
 " Rust
