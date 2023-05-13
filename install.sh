@@ -76,6 +76,5 @@ while [ $# -gt 0 ];do
   shift
 done
 install_starship
-install_zinit
 link_to_homedir
 command echo -e "\e[1;36m Install completed!!!! \e[m"
