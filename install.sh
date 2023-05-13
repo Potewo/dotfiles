@@ -14,14 +14,6 @@ install_starship() {
     curl -fsSL https://starship.rs/install.sh | bash
   fi
 }
-install_zinit() { 
-  if [[ -e "${HOME}/.zinit/bin/zinit.zsh" ]]; then # コマンドが存在すれば
-    command echo "zinit is already exist. skipped installing."
-  else
-    command echo "zinit is not found. start installing."
-    bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
-  fi
-}
 
 link_to_homedir() {
   # example: script_dir = /home/user/dotfiles
